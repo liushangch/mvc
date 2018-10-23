@@ -1,0 +1,59 @@
+.main-iframe {
+    border: 0;
+    width: 100%;
+}
+
+.wrapper {
+    background-color: #FFF;
+}
+
+.input-ssm {
+    height: 20px;
+    line-height: 1.5;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.search-form .form-group {
+    margin-bottom: 10px;
+}
+
+.search-form label {
+    padding-left: 20px;
+}
+
+/*页面加载中样式*/
+.loading-effect {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 280px;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+}
+
+/*没有数据*/
+.no-data {
+    border-bottom: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    text-align: center;
+    margin-top: -20px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 16px;
+}
+
+/*表格标题居中*/
+.table > thead > tr > th {
+    text-align: center;
+}
+
+/*修改checkbox和radio的显示偏移*/
+.checkbox label, .radio label {
+    padding-left: 0;
+    padding-right: 20px;
+}

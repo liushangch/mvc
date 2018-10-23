@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.admin.dao.SysTableDao">
+    <!--字段-->
+    <sql id="field">
+        a.table_id AS tableId,
+        a.table_name AS tableName,
+        a.table_schema AS tableSchema,
+        a.bean_name AS beanName,
+        a.bean_schema AS beanSchema,
+        a.bean_author AS beanAuthor,
+        a.create_user AS createUser,
+        a.create_time AS createTime,
+        a.update_user AS updateUser,
+        a.update_time AS updateTime
+    </sql>
+
+    <!--新增-->
+    <insert id="insert" parameterType="sysTable">
+        INSERT INTO sys_table (
+            table_name,
+            table_schema,
+            bean_name,
+            bean_schema,
+            bean_author,
+            create_user,
+            create_time,
+            update_user,
+            update_time,
+            ) VALUES (
+            #{tableId},
+            #{tableName},
+            #{tableSchema},
+            #{beanName},
+            #{beanSchema},
+            #{beanAuthor},
+            #{createUser},
+            #{createTime},
+            #{updateUser},
+            #{updateTime}
+        )
+    </insert>
+
+    <!--修改-->
+    <update id="update">
+        UPDATE sys_table a
+        SET
+        table_id = #{tableId}
+        WHERE table_id = #{tableId}
+    </update>
+
+    <!--查询单个-->
+    <select id="findForObject" parameterType="sysTable" resultType="sysTable">
+        SELECT
+        <include refid="field"/>
+        FROM sys_table a
+        <where>
+            <if test="tableId != null">
+                AND table_id = #{tableId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询列表-->
+    <select id="findForList" parameterType="sysTable" resultType="sysTable">
+        SELECT
+        <include refid="field"/>
+        FROM sys_table a
+        WHERE 1 = 1
+    </select>
+
+
+    <!--查询菜单信息-->
+    <select id="findTableList" parameterType="sysTable" resultType="sysTable">
+        SELECT
+            A.TABLE_NAME AS tableName,
+            A.TABLE_COMMENT AS tableSchema,
+            concat( A.TABLE_NAME ,'【',A.TABLE_COMMENT,'】') AS showName
+        FROM INFORMATION_SCHEMA.TABLES A
+        WHERE A.TABLE_SCHEMA = (SELECT DATABASE())
+    </select>
+
+    <!--查询菜单信息列表-->
+    <select id="findColumnList" parameterType="sysTable" resultType="sysTable">
+        SELECT
+            A.COLUMN_NAME AS columnName,
+            A.ORDINAL_POSITION AS ordinalPosition,
+            A.DATA_TYPE AS dataType,
+            A.COLUMN_COMMENT AS columnComment
+        FROM INFORMATION_SCHEMA.COLUMNS A
+        WHERE A.TABLE_NAME = #{tableName}
+        AND A.TABLE_SCHEMA = (SELECT DATABASE())
+        ORDER BY A.ORDINAL_POSITION
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+.tab-content {
+    border: 0;
+    padding: 0;
+}
+
+.nav-tabs {
+    top: 0;
+}
+
+.nav-tabs > li > a, .nav-tabs > li > a:focus {
+    line-height: 21px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    border-top: 0;
+    line-height: 22px;
+    margin-top: 0;
+}
+
+.nav-tabs > li.active > a .ace-icon, .nav-tabs > li.active > a .badge {
+    color: red;
+}

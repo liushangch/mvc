@@ -1,0 +1,4 @@
+site_name: "Redis Desktop Manager"
+pages:
+- Home: 'index.md'
+theme: readthedocs

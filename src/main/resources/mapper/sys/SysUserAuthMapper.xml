@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.admin.dao.SysUserAuthDao">
+    <!--字段-->
+    <sql id="field">
+        a.auth_id AS authId,
+        a.user_id AS userId,
+        a.auth_type AS authType,
+        a.auth_identify AS authIdentify,
+        a.auth_credential AS authCredential,
+        a.create_user AS createUser,
+        a.create_time AS createTime,
+        a.update_user AS updateUser,
+        a.update_time AS updateTime
+    </sql>
+
+    <!--新增用户信息-->
+    <insert id="insert">
+        INSERT INTO sys_user_auth (
+            user_id,
+            auth_type,
+            auth_identify,
+            auth_credential,
+            create_user,
+            create_time,
+            update_user,
+            update_time
+            ) VALUES (
+            #{userId},
+            #{authType},
+            #{authIdentify},
+            #{authCredential},
+            #{createUser},
+            #{createTime},
+            #{updateUser},
+            #{updateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user_auth
+        SET auth_id = #{auth_id}
+    </update>
+
+    <!--查询用户信息-->
+    <select id="findForObject" parameterType="sysUserAuth" resultType="sysUserAuth">
+        SELECT
+        <include refid="field"/>
+        FROM sys_user_auth a
+        WHERE 1 = 1
+        <if test="userId != null and userId != '' and authType != null and authType != ''">
+            AND a.user_id = #{userId}
+            AND a.auth_type = #{authType}
+        </if>
+    </select>
+
+    <!--查询用户信息-->
+    <select id="findForList" parameterType="sysUserAuth" resultType="sysUserAuth">
+        SELECT
+        <include refid="field"/>
+        FROM sys_user_auth a
+        <where>
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="authType != null and authType != ''">
+                AND a.auth_type = #{authType}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.admin.dao.SysTableColumnDao">
+    <!--字段-->
+    <sql id="field">
+        a.menu_id AS menuId,
+        a.code,
+        a.name,
+        a.icon,
+        a.menu_order AS menuOrder,
+        a.menu_parent_id AS menuParentId,
+        a.menu_type AS menuType,
+        a.menu_url AS menuUrl,
+        a.menu_status AS menuStatus,
+        a.open_type AS openType,
+        a.create_user AS createUser,
+        a.create_time AS createTime,
+        a.update_user AS updateUser,
+        a.update_time AS updateTime
+    </sql>
+
+    <!--新增菜单信息-->
+    <insert id="insert" parameterType="sysMenu">
+        INSERT INTO sys_menu (
+            code,
+            name,
+            icon,
+            menu_order,
+            menu_parent_id,
+            menu_type,
+            menu_url,
+            menu_status,
+            open_type,
+            create_user,
+            create_time,
+            update_user,
+            update_time
+            ) VALUES (
+            #{code},
+            #{name},
+            #{icon},
+            #{menuOrder},
+            #{menuParentId},
+            #{menuType},
+            #{menuUrl},
+            #{menuStatus},
+            #{openType},
+            #{createUser},
+            #{createTime},
+            #{updateUser},
+            #{updateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_menu a
+        SET
+        <if test="menuStatus != null and menuStatus != ''">menu_status = #{menuStatus},</if>
+        menu_id = #{menuId}
+        WHERE menu_id = #{menuId}
+    </update>
+
+    <!--查询菜单信息-->
+    <select id="findForObject" parameterType="sysMenu" resultType="sysMenu">
+        SELECT
+        <include refid="field"/>
+        FROM sys_menu a
+        <where>
+            <if test="menuId != null">
+                AND menu_id = #{menuId}
+            </if>
+        </where>
+    </select>
+
+    <!--查询菜单信息列表-->
+    <select id="findForList" parameterType="sysMenu" resultType="sysMenu">
+        SELECT
+        <include refid="field"/>
+        FROM sys_menu a
+        WHERE 1 = 1
+        <if test="name != null and name != ''">
+            AND a.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="menuParentId != null">
+            AND a.menu_parent_id = #{menuParentId}
+        </if>
+        <if test="menuType != null">
+            AND a.menu_type = #{menuType}
+        </if>
+        <if test="menuStatus != null">
+            AND a.menu_status = #{menuStatus}
+        </if>
+        <if test="orderField != null">
+            order by #{orderField}
+        </if>
+    </select>
+</mapper>

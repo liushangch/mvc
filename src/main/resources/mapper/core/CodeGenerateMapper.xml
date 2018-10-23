@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.admin.dao.SysMenuDao">
+    <!--查询菜单信息-->
+    <select id="findTableList" parameterType="sysMenu" resultType="sysMenu">
+        SELECT
+            A.TABLE_NAME AS tableName,
+            A.TABLE_COMMENT AS tableComment
+        FROM INFORMATION_SCHEMA.TABLES A
+        WHERE A.TABLE_SCHEMA = (SELECT DATABASE())
+    </select>
+
+    <!--查询菜单信息列表-->
+    <select id="findColumnList" parameterType="sysMenu" resultType="sysMenu">
+        SELECT
+            A.COLUMN_NAME AS columnName,
+            A.ORDINAL_POSITION AS ordinalPosition,
+            A.DATA_TYPE AS dataType,
+            A.COLUMN_COMMENT AS columnComment
+        FROM INFORMATION_SCHEMA.COLUMNS A
+        WHERE A.TABLE_NAME = 'sys_menu'
+        AND A.TABLE_SCHEMA = (SELECT DATABASE())
+        ORDER BY A.ORDINAL_POSITION
+    </select>
+</mapper>
