@@ -1,4 +1,4 @@
-site_name: "Redis Desktop Manager"
+site_name: "Admin"
 pages:
 - Home: 'index.md'
 theme: readthedocs
