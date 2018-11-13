@@ -21,9 +21,10 @@ import java.util.List;
 @ToString
 public class SysMenu extends BaseBean<SysMenu> implements Serializable {
     /**
-     * 主键编号
+     * 父级编号
      */
-    private Integer menuId;
+    @NotNull(message = "上级菜单不能为空")
+    private Integer parentId;
     /**
      * 菜单编码
      */
@@ -41,11 +42,6 @@ public class SysMenu extends BaseBean<SysMenu> implements Serializable {
      * 菜单顺序
      */
     private Integer menuOrder;
-    /**
-     * 父级编号
-     */
-    @NotNull(message = "上级菜单不能为空")
-    private Integer menuParentId;
     /**
      * 子级菜单
      */
@@ -74,7 +70,7 @@ public class SysMenu extends BaseBean<SysMenu> implements Serializable {
     public SysMenu() {
     }
 
-    public SysMenu(Integer menuId) {
-        this.menuId = menuId;
+    public SysMenu(Integer id) {
+        super.setId(id);
     }
 }

@@ -55,10 +55,10 @@
                     <td>${table.beanAuthor}</td>
                     <td>
                         <div class="hidden-sm hidden-xs action-buttons">
-                            <a class="green" href="#" title="修改" onclick="goEditMenu('${menu.menuId}')">
+                            <a class="green" href="#" title="修改" onclick="goEditMenu('${menu.id}')">
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
-                            <a class="red" href="#" title="删除" onclick="delMenu('${menu.menuId}')">
+                            <a class="red" href="#" title="删除" onclick="delMenu('${menu.id}')">
                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                             </a>
                         </div>
@@ -108,7 +108,7 @@
     /**
      * 删除
      */
-    function delMenu(menuId) {
+    function delMenu(id) {
         top.layer.confirm('确定删除吗？', {
             icon: 2,
             yes: function (index) {
@@ -116,7 +116,7 @@
                     type: "post",
                     url: "${basePath}/admin/menu/delMenu",
                     dataType: "json",
-                    data: {menuId: menuId},
+                    data: {id: id},
                     success: function (result) {
                         if (result.code === 200) {
                             window.location.reload();

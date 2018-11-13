@@ -3,12 +3,12 @@
 <mapper namespace="com.leo.admin.dao.SysMenuDao">
     <!--字段-->
     <sql id="field">
-        a.menu_id AS menuId,
+        a.id,
+        a.parent_id AS parentId,
         a.code,
         a.name,
         a.icon,
         a.menu_order AS menuOrder,
-        a.menu_parent_id AS menuParentId,
         a.menu_type AS menuType,
         a.menu_url AS menuUrl,
         a.menu_status AS menuStatus,
@@ -23,11 +23,11 @@
     <!--新增菜单信息-->
     <insert id="insert" parameterType="sysMenu">
         INSERT INTO sys_menu (
+            parent_id,
             code,
             name,
             icon,
             menu_order,
-            menu_parent_id,
             menu_type,
             menu_url,
             menu_status,
@@ -38,11 +38,11 @@
             update_user,
             update_time
             ) VALUES (
+            #{parentId},
             #{code},
             #{name},
             #{icon},
             #{menuOrder},
-            #{menuParentId},
             #{menuType},
             #{menuUrl},
             #{menuStatus},
@@ -56,11 +56,22 @@
     </insert>
 
     <update id="update">
-        UPDATE sys_menu a
+        UPDATE sys_menu
         SET
-        <if test="menuStatus != null and menuStatus != ''">menu_status = #{menuStatus},</if>
-        menu_id = #{menuId}
-        WHERE menu_id = #{menuId}
+        <if test="parentId != null">parent_id = #{parentId},</if>
+        <if test="code != null and code != ''">code = #{code},</if>
+        <if test="name != null and name != ''">name = #{name},</if>
+        <if test="icon != null and icon != ''">icon = #{icon},</if>
+        <if test="menuOrder != null">menu_order = #{menuOrder},</if>
+        <if test="menuType != null">menu_type = #{menuType},</if>
+        <if test="menuUrl != null and menuUrl != ''">menu_url = #{menuUrl},</if>
+        <if test="menuStatus != null">menu_status = #{menuStatus},</if>
+        <if test="openType != null and openType != ''">open_type = #{openType},</if>
+        <if test="permission != null and permission != ''">permission = #{permission},</if>
+        <if test="updateUser != null and updateUser != ''">update_user = #{updateUser},</if>
+        <if test="updateTime != null">update_time = #{updateTime},</if>
+        id = #{id}
+        WHERE id = #{id}
     </update>
 
     <!--查询菜单信息-->
@@ -69,8 +80,8 @@
         <include refid="field"/>
         FROM sys_menu a
         <where>
-            <if test="menuId != null">
-                AND menu_id = #{menuId}
+            <if test="id != null">
+                AND id = #{id}
             </if>
         </where>
     </select>
@@ -84,8 +95,8 @@
         <if test="name != null and name != ''">
             AND a.name LIKE CONCAT('%',#{name},'%')
         </if>
-        <if test="menuParentId != null">
-            AND a.menu_parent_id = #{menuParentId}
+        <if test="parentId != null">
+            AND a.parent_id = #{parentId}
         </if>
         <if test="menuType != null">
             AND a.menu_type = #{menuType}

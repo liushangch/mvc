@@ -1,5 +1,5 @@
-function openMenu(menuId, title, url, e) {
-    var menu_num = "menu_" + menuId;
+function openMenu(id, title, url, e) {
+    var menu_num = "menu_" + id;
     var $menuTab = $("#menuTab", top.document);
     var $menuContent = $("#menuContent", top.document);
     // 移除当前TAB页选中状态

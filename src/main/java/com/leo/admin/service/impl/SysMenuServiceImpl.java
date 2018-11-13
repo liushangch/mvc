@@ -4,6 +4,7 @@ import com.leo.admin.bean.SysMenu;
 import com.leo.admin.dao.SysMenuDao;
 import com.leo.admin.service.BaseService;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,13 @@ import java.util.List;
  * @date 2018/7/5 17:32
  */
 @Service
-@CacheConfig(cacheNames = "SysMenu")
+@CacheConfig(cacheNames = "redisCache")
 public class SysMenuServiceImpl implements BaseService<SysMenu> {
     @Resource
     private SysMenuDao dao;
 
     @Override
+    @CachePut(key = "#menu.id")
     public int saveObject(SysMenu menu) {
         return dao.insert(menu);
     }
@@ -38,20 +40,20 @@ public class SysMenuServiceImpl implements BaseService<SysMenu> {
         return dao.delete(menu);
     }
 
-    @Cacheable(key = "#id")
     @Override
+    @Cacheable(key = "#id")
     public SysMenu findById(int id) {
         return dao.findForObject(new SysMenu(id));
     }
 
-    @Cacheable(key = "#menu.menuId")
     @Override
+    @Cacheable(key = "#menu.id")
     public SysMenu findObject(SysMenu menu) {
         return dao.findForObject(menu);
     }
 
-    @Cacheable
     @Override
+    @Cacheable
     public List<SysMenu> findList(SysMenu menu) {
         return dao.findForList(menu);
     }
@@ -66,7 +68,7 @@ public class SysMenuServiceImpl implements BaseService<SysMenu> {
         menu.setOrderField("order");
         List<SysMenu> menuList = findList(menu);
         for (SysMenu outMenu : menuList) {
-            outMenu.setMenuList(getMenuListByParentId(outMenu.getMenuId()));
+            outMenu.setMenuList(getMenuListByParentId(outMenu.getId()));
         }
         return menuList;
     }
@@ -74,19 +76,19 @@ public class SysMenuServiceImpl implements BaseService<SysMenu> {
     /**
      * 递归查询所有菜单
      *
-     * @param menuParentId 父级编号
+     * @param parentId 父级编号
      * @return 菜单列表
      */
-    public List<SysMenu> getMenuListByParentId(int menuParentId) {
+    public List<SysMenu> getMenuListByParentId(int parentId) {
         List<SysMenu> menuList = null;
         SysMenu inMenu = new SysMenu();
-        inMenu.setMenuParentId(menuParentId);
+        inMenu.setParentId(parentId);
         inMenu.setOrderField("order");
         List<SysMenu> outMenuList = findList(inMenu);
         if (outMenuList.size() > 0) {
             menuList = new ArrayList<>();
             for (SysMenu outMenu : outMenuList) {
-                outMenu.setMenuList(getMenuListByParentId(outMenu.getMenuId()));
+                outMenu.setMenuList(getMenuListByParentId(outMenu.getId()));
                 menuList.add(outMenu);
             }
         }

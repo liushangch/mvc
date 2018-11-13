@@ -83,7 +83,7 @@
                                     <ul class="submenu">
                                         <c:forEach items="${twoMenu.menuList}" var="threeMenu">
                                             <li class="">
-                                                <a href="#" onclick="openMenu('${threeMenu.menuId}','${threeMenu.name}','${basePath}${threeMenu.menuUrl}',this)">
+                                                <a href="#" onclick="openMenu('${threeMenu.id}','${threeMenu.name}','${basePath}${threeMenu.menuUrl}',this)">
                                                     <i class="menu-icon fa ${threeMenu.icon}"></i>
                                                     <span>${threeMenu.name}</span>
                                                 </a>
@@ -93,7 +93,7 @@
                                     </ul>
                                 </c:if>
                                 <c:if test="${hasMenu eq false}">
-                                    <a href="#" onclick="openMenu('${twoMenu.menuId}','${twoMenu.name}','${basePath}${twoMenu.menuUrl}',this)">
+                                    <a href="#" onclick="openMenu('${twoMenu.id}','${twoMenu.name}','${basePath}${twoMenu.menuUrl}',this)">
                                         <i class="menu-icon fa fa-caret-right"></i>
                                         <span><i class="menu-icon fa ${twoMenu.icon}"></i></span>
                                         <span>${twoMenu.name}</span>

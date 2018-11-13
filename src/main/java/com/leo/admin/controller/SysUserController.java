@@ -39,7 +39,7 @@ public class SysUserController extends BaseController {
     public ModelAndView list(SysMenu inMenu) {
         ModelAndView mv = new ModelAndView();
         if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-            inMenu.setMenuParentId(0);
+            inMenu.setParentId(0);
         }
         List<SysMenu> menuList = menuService.getMenuList(inMenu);
         mv.addObject("inMenu", inMenu);
@@ -64,7 +64,7 @@ public class SysUserController extends BaseController {
     @RequestMapping(value = "goEdit")
     public ModelAndView goEdit(@ModelAttribute("inMenu") SysMenu inMenu) {
         ModelAndView mv = new ModelAndView();
-        inMenu = menuService.findById(inMenu.getMenuId());
+        inMenu = menuService.findById(inMenu.getId());
         mv.addObject("inMenu", inMenu);
         mv.setViewName("admin/model/sys_role_from");
         return mv;
@@ -77,7 +77,7 @@ public class SysUserController extends BaseController {
     public ModelAndView goChoice(@ModelAttribute("inMenu") SysMenu inMenu) {
         ModelAndView mv = new ModelAndView();
         if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-            inMenu.setMenuParentId(0);
+            inMenu.setParentId(0);
         }
         List<SysMenu> menuList = menuService.getMenuList(inMenu);
         mv.addObject("inMenu", inMenu);
@@ -143,7 +143,7 @@ public class SysUserController extends BaseController {
     public Object getZTreeMenu(SysMenu inMenu) {
         try {
             if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-                inMenu.setMenuParentId(0);
+                inMenu.setParentId(0);
             }
             List<SysMenu> menuList = menuService.getMenuList(inMenu);
             if (menuList.size() > 0) {

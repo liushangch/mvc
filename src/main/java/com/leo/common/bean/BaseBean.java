@@ -1,5 +1,7 @@
 package com.leo.common.bean;
 
+import org.apache.shiro.SecurityUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +13,10 @@ import java.util.List;
  * @date 2018/8/22
  */
 public class BaseBean<T> implements Serializable {
+    /**
+     * 主键
+     */
+    private Integer id;
     /**
      * 创建人
      */
@@ -41,6 +47,11 @@ public class BaseBean<T> implements Serializable {
     private List<String> errorList;
 
     public BaseBean() {
+        Object userObject = SecurityUtils.getSubject().getPrincipal();
+        if (userObject != null) {
+            createUser = userObject.toString();
+            updateUser = userObject.toString();
+        }
         Date date = new Date();
         createTime = date;
         updateTime = date;
@@ -49,7 +60,8 @@ public class BaseBean<T> implements Serializable {
     @Override
     public String toString() {
         return "BaseBean{" +
-                "createUser='" + createUser + '\'' +
+                "id=" + id +
+                ", createUser='" + createUser + '\'' +
                 ", createTime=" + createTime +
                 ", updateUser='" + updateUser + '\'' +
                 ", updateTime=" + updateTime +
@@ -57,6 +69,14 @@ public class BaseBean<T> implements Serializable {
                 ", page=" + page +
                 ", errorList=" + errorList +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCreateUser() {

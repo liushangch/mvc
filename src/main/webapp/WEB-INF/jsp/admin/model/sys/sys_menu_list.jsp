@@ -59,7 +59,7 @@
             <c:forEach items="${menuList}" var="menu" varStatus="status">
                 <c:set var="i" value="${status.index + 1}"/>
                 <tr data-tt-id="${i}">
-                    <td><a href="#" onclick="goEditMenu('${menu.menuId}')">${menu.name}</a></td>
+                    <td><a href="#" onclick="goEditMenu('${menu.id}')">${menu.name}</a></td>
                     <td style="text-align: center;"><i class="menu-icon home-icon fa ${menu.icon}"></i></td>
                     <td>
                         <c:if test="${menu.menuType eq 1}">
@@ -69,19 +69,19 @@
                             <span class="label label-info">按钮</span>
                         </c:if>
                     </td>
-                    <td><input class="form-control input-ssm" value="${menu.menuOrder}" style="text-align: center;" onchange="editMenuOrder('${menu.menuId}','${menu.menuOrder}')"></td>
+                    <td><input class="form-control input-ssm" value="${menu.menuOrder}" style="text-align: center;" onchange="editMenuOrder('${menu.id}','${menu.menuOrder}')"></td>
                     <td style="text-align: center;">
-                        <input type="checkbox" name="menuStatus" value="${menu.menuStatus}" onchange="switchMenuStatus('${menu.menuId}',this)" <c:if test="${menu.menuStatus eq 1}">checked</c:if>/>
+                        <input type="checkbox" name="menuStatus" value="${menu.menuStatus}" onchange="switchMenuStatus('${menu.id}',this)" <c:if test="${menu.menuStatus eq 1}">checked</c:if>/>
                     </td>
                     <td>${menu.menuUrl}</td>
                     <td>${menu.permission}</td>
                     <td>
-                        <input type="hidden" value="${menu.menuId}">
+                        <input type="hidden" value="${menu.id}">
                         <div class="hidden-sm hidden-xs action-buttons">
-                            <a class="green" href="#" title="修改" onclick="goEditMenu('${menu.menuId}')">
+                            <a class="green" href="#" title="修改" onclick="goEditMenu('${menu.id}')">
                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                             </a>
-                            <a class="red" href="#" title="删除" onclick="delMenu('${menu.menuId}')">
+                            <a class="red" href="#" title="删除" onclick="delMenu('${menu.id}')">
                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                             </a>
                         </div>
@@ -91,7 +91,7 @@
                     <c:forEach items="${menu.menuList}" var="twoMenu" varStatus="twoMenuStatus">
                         <c:set var="j" value="${twoMenuStatus.index + 1}"/>
                         <tr data-tt-id="${i}-${j}" data-tt-parent-id='${i}'>
-                        <td><a href="#" onclick="goEditMenu('${twoMenu.menuId}')">${twoMenu.name}</a></td>
+                        <td><a href="#" onclick="goEditMenu('${twoMenu.id}')">${twoMenu.name}</a></td>
                         <td style="text-align: center;"><i class="menu-icon home-icon fa ${twoMenu.icon}"></i></td>
                         <td>
                             <c:if test="${twoMenu.menuType eq 1}">
@@ -108,12 +108,12 @@
                         <td>${twoMenu.menuUrl}</td>
                         <td>${twoMenu.permission}</td>
                         <td>
-                            <input type="hidden" value="${twoMenu.menuId}">
+                            <input type="hidden" value="${twoMenu.id}">
                             <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="green" href="#" title="修改" onclick="goEditMenu('${twoMenu.menuId}')">
+                                <a class="green" href="#" title="修改" onclick="goEditMenu('${twoMenu.id}')">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
-                                <a class="red" href="#" title="删除" onclick="delMenu('${twoMenu.menuId}')">
+                                <a class="red" href="#" title="删除" onclick="delMenu('${twoMenu.id}')">
                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                 </a>
                             </div>
@@ -122,7 +122,7 @@
                             <c:forEach items="${twoMenu.menuList}" var="threeMenu" varStatus="threeMenuStatus">
                                 <c:set var="k" value="${threeMenuStatus.index + 1}"/>
                                 <tr data-tt-id="${i}-${j}-${k}" data-tt-parent-id='${i}-${j}'>
-                                    <td><a href="#" onclick="goEditMenu('${threeMenu.menuId}')">${threeMenu.name}</a></td>
+                                    <td><a href="#" onclick="goEditMenu('${threeMenu.id}')">${threeMenu.name}</a></td>
                                     <td style="text-align: center;"><i class="menu-icon home-icon fa ${threeMenu.icon}"></i></td>
                                     <td>
                                         <c:if test="${threeMenu.menuType eq 1}">
@@ -139,12 +139,12 @@
                                     <td>${threeMenu.menuUrl}</td>
                                     <td>${threeMenu.permission}</td>
                                     <td>
-                                        <input type="hidden" value="${threeMenu.menuId}">
+                                        <input type="hidden" value="${threeMenu.id}">
                                         <div class="hidden-sm hidden-xs action-buttons">
-                                            <a class="green" href="#" title="修改" onclick="goEditMenu('${threeMenu.menuId}')">
+                                            <a class="green" href="#" title="修改" onclick="goEditMenu('${threeMenu.id}')">
                                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                                             </a>
-                                            <a class="red" href="#" title="删除" onclick="delMenu('${threeMenu.menuId}')">
+                                            <a class="red" href="#" title="删除" onclick="delMenu('${threeMenu.id}')">
                                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                             </a>
                                         </div>
@@ -197,14 +197,14 @@
     /**
      * 去修改页面
      */
-    function goEditMenu(menuId) {
-        window.location.href = "${basePath}/admin/menu/goEdit?menuId=" + menuId;
+    function goEditMenu(id) {
+        window.location.href = "${basePath}/admin/menu/goEdit?id=" + id;
     }
 
     /**
      * 删除
      */
-    function delMenu(menuId) {
+    function delMenu(id) {
         top.layer.confirm('确定删除吗？', {
             icon: 2,
             yes: function (index) {
@@ -212,7 +212,7 @@
                     type: "post",
                     url: "${basePath}/admin/menu/delMenu",
                     dataType: "json",
-                    data: {menuId: menuId},
+                    data: {id: id},
                     success: function (result) {
                         if (result.code === 200) {
                             window.location.reload();
@@ -225,7 +225,7 @@
     }
 
     // 修改菜单顺序
-    function editMenuOrder(menuId, menuOrder) {
+    function editMenuOrder(id, menuOrder) {
         var state = $(e).bootstrapSwitch('state');
         var menuStatus;
         if (state) {
@@ -234,7 +234,7 @@
             menuStatus = 2;
         }
         $.post("${basePath}/admin/menu/switchMenuStatus",
-            {menuId: menuId, menuStatus: menuStatus},
+            {id: id, menuStatus: menuStatus},
             function (result) {
                 if (result.code === 200) {
                     top.layer.msg('成功');
@@ -245,7 +245,7 @@
     }
 
     // 切换菜单状态
-    function switchMenuStatus(menuId, e) {
+    function switchMenuStatus(id, e) {
         var state = $(e).bootstrapSwitch('state');
         var menuStatus;
         if (state) {
@@ -254,7 +254,7 @@
             menuStatus = 2;
         }
         $.post("${basePath}/admin/menu/switchMenuStatus",
-            {menuId: menuId, menuStatus: menuStatus},
+            {id: id, menuStatus: menuStatus},
             function (result) {
                 if (result.code === 200) {
                     top.layer.msg('成功');

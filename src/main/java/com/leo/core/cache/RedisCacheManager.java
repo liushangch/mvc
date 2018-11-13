@@ -77,7 +77,11 @@ public class RedisCacheManager implements Cache {
         final String key = o.toString();
         final Object value = o1;
         log.info("添加缓存，{}", key);
-        redisTemplate.execute((RedisCallback<Boolean>) redisConnection -> redisConnection.set(key.getBytes(), SerializationUtils.serialize(value)));
+        redisTemplate.execute((RedisCallback<Boolean>) redisConnection -> {
+            Boolean flag = redisConnection.set(key.getBytes(), SerializationUtils.serialize(value));
+            redisConnection.expire(key.getBytes(), 60 * 60 * 24);
+            return flag;
+        });
     }
 
     @Override

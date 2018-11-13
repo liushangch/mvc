@@ -6,10 +6,6 @@
         <class-a>com.leo.admin.bean.SysMenu</class-a>
         <class-b>com.leo.admin.bean.TreeMenu</class-b>
         <field>
-            <a>menuId</a>
-            <b>id</b>
-        </field>
-        <field>
             <a>menuList</a>
             <b>children</b>
             <b-hint>com.leo.admin.bean.TreeMenu</b-hint>

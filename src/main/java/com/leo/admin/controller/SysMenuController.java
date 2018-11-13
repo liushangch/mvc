@@ -38,7 +38,7 @@ public class SysMenuController extends BaseController {
     @RequestMapping(value = "list")
     public String list(SysMenu inMenu, Model model) {
         if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-            inMenu.setMenuParentId(0);
+            inMenu.setParentId(0);
         }
         List<SysMenu> menuList = menuService.getMenuList(inMenu);
         model.addAttribute("inMenu", inMenu);
@@ -51,7 +51,7 @@ public class SysMenuController extends BaseController {
      */
     @RequestMapping(value = "goAdd")
     public String goAdd(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
-        model.addAttribute(ConstantUtils.OPERATE, ConstantUtils.SAVE);
+        model.addAttribute(Constants.OPERATE, Constants.SAVE);
         return FORM;
     }
 
@@ -60,9 +60,9 @@ public class SysMenuController extends BaseController {
      */
     @RequestMapping(value = "goEdit")
     public String goEdit(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
-        inMenu = menuService.findById(inMenu.getMenuId());
+        inMenu = menuService.findById(inMenu.getId());
         model.addAttribute("inMenu", inMenu);
-        model.addAttribute(ConstantUtils.OPERATE, ConstantUtils.UPDATE);
+        model.addAttribute(Constants.OPERATE, Constants.UPDATE);
         return FORM;
     }
 
@@ -72,7 +72,7 @@ public class SysMenuController extends BaseController {
     @RequestMapping(value = "goChoice")
     public String goChoice(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
         if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-            inMenu.setMenuParentId(0);
+            inMenu.setParentId(0);
         }
         List<SysMenu> menuList = menuService.getMenuList(inMenu);
         model.addAttribute("inMenu", inMenu);
@@ -87,7 +87,7 @@ public class SysMenuController extends BaseController {
     public String save(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
         ValidationError error = ValidationUtils.validation(inMenu);
         if (error.hasErrors()) {
-            model.addAttribute(ConstantUtils.ERRORS, error.getErrors());
+            model.addAttribute(Constants.ERRORS, error.getErrors());
             return FORM;
         } else {
             int num = menuService.saveObject(inMenu);
@@ -102,7 +102,7 @@ public class SysMenuController extends BaseController {
     public String update(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
         ValidationError error = ValidationUtils.validation(inMenu);
         if (error.hasErrors()) {
-            model.addAttribute(ConstantUtils.ERRORS, error.getErrors());
+            model.addAttribute(Constants.ERRORS, error.getErrors());
             return FORM;
         } else {
             int num = menuService.updateObject(inMenu);
@@ -147,12 +147,12 @@ public class SysMenuController extends BaseController {
     public Object getZTreeMenu(SysMenu inMenu) {
         try {
             if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-                inMenu.setMenuParentId(0);
+                inMenu.setParentId(0);
             }
             List<SysMenu> menuList = menuService.getMenuList(inMenu);
             if (menuList.size() > 0) {
                 List<TreeMenu> treeMenuList = new ArrayList<>();
-                TreeMenu treeMenu = new TreeMenu("0", ConstantUtils.TOP_MENU_NAME);
+                TreeMenu treeMenu = new TreeMenu("0", Constants.TOP_MENU_NAME);
                 treeMenu.setChildren(DozerUtils.beanMapper(menuList, TreeMenu.class));
                 treeMenuList.add(treeMenu);
                 return new ResultBean(treeMenuList);

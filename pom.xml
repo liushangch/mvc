@@ -173,12 +173,6 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <!-- c3p0数据库连接池 -->
-        <!--<dependency>-->
-        <!--<groupId>com.mchange</groupId>-->
-        <!--<artifactId>c3p0</artifactId>-->
-        <!--<version>0.9.5.2</version>-->
-        <!--</dependency>-->
         <!-- 阿里Druid数据库连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -201,7 +195,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.43</version>
+            <version>1.2.51</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>commons-pool</groupId>-->

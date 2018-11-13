@@ -27,15 +27,15 @@ public class DictionaryUtils {
     /**
      * 根据菜单编号获取菜单名称
      *
-     * @param menuId 菜单编号
+     * @param id 菜单编号
      * @return 菜单名称
      */
-    public static String getMenuName(int menuId) {
+    public static String getMenuName(int id) {
         try {
-            if (menuId == 0) {
-                return ConstantUtils.TOP_MENU_NAME;
+            if (id == 0) {
+                return Constants.TOP_MENU_NAME;
             }
-            SysMenu menu = dictionaryUtils.sysMenuService.findById(menuId);
+            SysMenu menu = dictionaryUtils.sysMenuService.findById(id);
             return menu.getName();
         } catch (Exception e) {
             e.printStackTrace();

@@ -46,7 +46,7 @@
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
     var zNodes = [];
 
-    var parentMenuId = '${inMenu.menuId}';
+    var parentMenuId = '${inMenu.id}';
     $(function () {
         $(".box-content").css("height", $(window).height() - 100);
         $.ajax({
@@ -80,8 +80,8 @@
             var len = nodes.length;
             if (len > 0) {
                 if (len === 1) {
-                    parent.$(".main-iframe").contents().find("#menuParentId").val(nodes[0].id);
-                    parent.$(".main-iframe").contents().find("#menuParentName").val(nodes[0].name);
+                    parent.$(".main-iframe").contents().find("#parentId").val(nodes[0].id);
+                    parent.$(".main-iframe").contents().find("#parentName").val(nodes[0].name);
                     top.layer.closeAll();
                 } else {
                     layer.msg('只能选择一个菜单');
@@ -92,8 +92,8 @@
         });
         // 清除按钮
         $('#clearBtn').on('click', function () {
-            parent.$(".main-iframe").contents().find("#menuParentId").val('');
-            parent.$(".main-iframe").contents().find("#menuParentName").val('');
+            parent.$(".main-iframe").contents().find("#parentId").val('');
+            parent.$(".main-iframe").contents().find("#parentName").val('');
             top.layer.closeAll();
         });
         // 关闭按钮

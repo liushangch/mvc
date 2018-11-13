@@ -12,20 +12,21 @@
 </div>
 <div class="page-content" style="display: none;">
     <form:form id="form" cssClass="form-horizontal" action="${basePath}/admin/menu/${operate}" method="POST" modelAttribute="inMenu">
+        <form:hidden path="id"/>
         <h3 class="row header smaller lighter blue">
-            <span class="col-xs-6">${not empty inMenu.menuId?'修改':'新增'}菜单</span>
+            <span class="col-xs-6">${not empty inMenu.id?'修改':'新增'}菜单</span>
         </h3>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="menuParentId" class="col-sm-4 control-label">上级菜单：</label>
+                            <label for="parentId" class="col-sm-4 control-label">上级菜单：</label>
                             <div class="col-sm-8">
                                 <div class="input-group" id="selectMenu">
-                                    <form:hidden path="menuParentId" cssClass="form-control input-sm" readonly="true"/>
-                                    <input class="form-control input-sm" type="text" id="menuParentName" value="${fna:getMenuName(inMenu.menuParentId)}">
-                                    <form:errors path="menuParentId" cssClass="error"/>
+                                    <form:hidden path="parentId" cssClass="form-control input-sm" readonly="true"/>
+                                    <input class="form-control input-sm" type="text" id="parentName" value="${fna:getMenuName(inMenu.parentId)}">
+                                    <form:errors path="parentId" cssClass="error"/>
                                     <span class="input-group-btn">
                                         <a class="btn btn-default btn-xs"><i class="fa fa-search"></i></a>
                                     </span>
@@ -159,14 +160,14 @@
 
         // 选择上级菜单
         $("#selectMenu").on('click', function () {
-            var menuId = $("#menuParentId").val();
+            var id = $("#parentId").val();
             top.layer.open({
                 type: 2,
                 title: '选择菜单',
                 area: ['300px', '450px'],
                 fixed: false, //不固定
                 maxmin: true,
-                content: '${basePath}/admin/menu/goChoice?menuId=' + menuId
+                content: '${basePath}/admin/menu/goChoice?id=' + id
             });
         });
 
