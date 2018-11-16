@@ -24,7 +24,7 @@
         <form class="form-inline" action="${basePath}/admin/menu/list" method="post">
             <div class="form-group">
                 <label for="name">姓名：</label>
-                <input class="form-control input-sm" id="name" name="name" value="${inMenu.name}" autocomplete="off"/>
+                <input class="form-control input-sm" id="name" name="name" value="${searchMenu.name}" autocomplete="off"/>
             </div>
             <div class="form-group">
                 <%--<label for="phone">手机：</label>--%>
@@ -217,6 +217,8 @@
                         if (result.code === 200) {
                             window.location.reload();
                             top.layer.close(index);
+                        } else {
+                            layer.open({title: '提示', content: '删除失败'});
                         }
                     }
                 });

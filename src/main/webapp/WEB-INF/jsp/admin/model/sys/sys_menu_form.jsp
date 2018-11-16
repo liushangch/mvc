@@ -54,7 +54,7 @@
                                     </label>
                                     <label>
                                         <input name="menuType" type="radio" value="2">
-                                        <span class="lbl"> 按钮</span>
+                                        <span class="lbl"> 权限</span>
                                     </label>
                                 </div>
                             </div>

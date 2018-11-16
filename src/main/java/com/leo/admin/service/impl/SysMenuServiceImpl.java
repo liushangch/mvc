@@ -3,9 +3,8 @@ package com.leo.admin.service.impl;
 import com.leo.admin.bean.SysMenu;
 import com.leo.admin.dao.SysMenuDao;
 import com.leo.admin.service.BaseService;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
+import com.leo.common.annotation.RedisDel;
+import com.leo.common.annotation.RedisGet;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,13 +18,11 @@ import java.util.List;
  * @date 2018/7/5 17:32
  */
 @Service
-@CacheConfig(cacheNames = "redisCache")
 public class SysMenuServiceImpl implements BaseService<SysMenu> {
     @Resource
     private SysMenuDao dao;
 
     @Override
-    @CachePut(key = "#menu.id")
     public int saveObject(SysMenu menu) {
         return dao.insert(menu);
     }
@@ -36,24 +33,23 @@ public class SysMenuServiceImpl implements BaseService<SysMenu> {
     }
 
     @Override
+    @RedisDel(key = "#menu.id", nameSpace = "SysMenu:")
     public int deleteObject(SysMenu menu) {
         return dao.delete(menu);
     }
 
     @Override
-    @Cacheable(key = "#id")
+    @RedisGet(key = "#id", nameSpace = "SysMenu:", clazz = SysMenu.class)
     public SysMenu findById(int id) {
         return dao.findForObject(new SysMenu(id));
     }
 
     @Override
-    @Cacheable(key = "#menu.id")
     public SysMenu findObject(SysMenu menu) {
         return dao.findForObject(menu);
     }
 
     @Override
-    @Cacheable
     public List<SysMenu> findList(SysMenu menu) {
         return dao.findForList(menu);
     }

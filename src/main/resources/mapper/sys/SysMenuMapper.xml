@@ -21,7 +21,7 @@
     </sql>
 
     <!--新增菜单信息-->
-    <insert id="insert" parameterType="sysMenu">
+    <insert id="insert" parameterType="sysMenu" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_menu (
             parent_id,
             code,
@@ -108,4 +108,8 @@
             order by #{orderField}
         </if>
     </select>
+
+    <delete id="delete" parameterType="sysMenu">
+        DELETE FROM sys_menu WHERE id = #{id}
+    </delete>
 </mapper>

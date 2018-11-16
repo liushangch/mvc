@@ -26,9 +26,6 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/admin/menu")
 public class SysMenuController extends BaseController {
-    private final static String LIST = "admin/model/sys/sys_menu_list";
-    private final static String FORM = "admin/model/sys/sys_menu_form";
-    private final static String CHOICE = "admin/model/sys/sys_menu_choice";
     @Resource
     private SysMenuServiceImpl menuService;
 
@@ -36,14 +33,13 @@ public class SysMenuController extends BaseController {
      * 菜单列表页面
      */
     @RequestMapping(value = "list")
-    public String list(SysMenu inMenu, Model model) {
-        if (StringUtils.isNullOrEmpty(inMenu.getName())) {
-            inMenu.setParentId(0);
+    public String list(@ModelAttribute("searchMenu") SysMenu searchMenu, Model model) {
+        if (StringUtils.isNullOrEmpty(searchMenu.getName())) {
+            searchMenu.setParentId(0);
         }
-        List<SysMenu> menuList = menuService.getMenuList(inMenu);
-        model.addAttribute("inMenu", inMenu);
+        List<SysMenu> menuList = menuService.getMenuList(searchMenu);
         model.addAttribute("menuList", menuList);
-        return LIST;
+        return "admin/model/sys/sys_menu_list";
     }
 
     /**
@@ -51,8 +47,9 @@ public class SysMenuController extends BaseController {
      */
     @RequestMapping(value = "goAdd")
     public String goAdd(@ModelAttribute("inMenu") SysMenu inMenu, Model model) {
+        inMenu.setParentId(0);
         model.addAttribute(Constants.OPERATE, Constants.SAVE);
-        return FORM;
+        return "admin/model/sys/sys_menu_form";
     }
 
     /**
@@ -63,7 +60,7 @@ public class SysMenuController extends BaseController {
         inMenu = menuService.findById(inMenu.getId());
         model.addAttribute("inMenu", inMenu);
         model.addAttribute(Constants.OPERATE, Constants.UPDATE);
-        return FORM;
+        return "admin/model/sys/sys_menu_form";
     }
 
     /**
@@ -77,7 +74,7 @@ public class SysMenuController extends BaseController {
         List<SysMenu> menuList = menuService.getMenuList(inMenu);
         model.addAttribute("inMenu", inMenu);
         model.addAttribute("menuList", menuList);
-        return CHOICE;
+        return "admin/model/sys/sys_menu_choice";
     }
 
     /**
@@ -88,10 +85,10 @@ public class SysMenuController extends BaseController {
         ValidationError error = ValidationUtils.validation(inMenu);
         if (error.hasErrors()) {
             model.addAttribute(Constants.ERRORS, error.getErrors());
-            return FORM;
+            return "admin/model/sys/sys_menu_form";
         } else {
             int num = menuService.saveObject(inMenu);
-            return num > 0 ? LIST : FORM;
+            return num > 0 ? "admin/model/sys/sys_menu_list" : "admin/model/sys/sys_menu_form";
         }
     }
 
@@ -103,10 +100,10 @@ public class SysMenuController extends BaseController {
         ValidationError error = ValidationUtils.validation(inMenu);
         if (error.hasErrors()) {
             model.addAttribute(Constants.ERRORS, error.getErrors());
-            return FORM;
+            return "admin/model/sys/sys_menu_form";
         } else {
             int num = menuService.updateObject(inMenu);
-            return num > 0 ? LIST : FORM;
+            return num > 0 ? "admin/model/sys/sys_menu_list" : "admin/model/sys/sys_menu_form";
         }
     }
 

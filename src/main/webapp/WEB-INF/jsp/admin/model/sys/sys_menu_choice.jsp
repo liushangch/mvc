@@ -46,19 +46,19 @@
     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
     var zNodes = [];
 
-    var parentMenuId = '${inMenu.id}';
+    var selectId = '${inMenu.id}';
     $(function () {
         $(".box-content").css("height", $(window).height() - 100);
         $.ajax({
             type: "post",
             url: "${basePath}/admin/menu/getZTreeMenu",
             dataType: "json",
-            // data: {menuId: menuId},
+            data: {id: selectId},
             success: function (result) {
                 if (result.code === 200) {
                     zNodes = result.data;
                     zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-                    var nodes = zTreeObj.getNodesByParam("id", parentMenuId, null);
+                    var nodes = zTreeObj.getNodesByParam("id", selectId, null);
                     if (nodes.length > 0) {
                         zTreeObj.selectNode(nodes[0]);
                     }
